@@ -13,6 +13,10 @@ import { BidModal } from '@/ui/components/modals/BidModal';
 import { BidsListModal } from '@/ui/components/modals/BidsListModal';
 import style from './home.module.scss';
 
+/**
+ * Home page that displays and manages auctions
+ * Allows creating, viewing and participating in auctions
+ */
 export default function Home() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [selectedAuction, setSelectedAuction] = useState<Auction | null>(null);
@@ -21,6 +25,9 @@ export default function Home() {
   const [isViewBidsDialogOpen, setIsViewBidsDialogOpen] = useState(false);
   const { toast } = useToast();
 
+  /**
+   * Initialize auctions from localStorage or use default auctions
+   */
   useEffect(() => {
     const storedAuctions = localStorage.getItem('auctions');
     if (storedAuctions) {
@@ -31,11 +38,18 @@ export default function Home() {
     }
   }, []);
 
+  /**
+   * Get the number of bids for a given auction
+   */
   const getBidCount = (auctionId: number): number => {
     const bids = JSON.parse(localStorage.getItem('bids') || '[]') as { auctionId: number }[];
     return bids.filter((bid) => bid.auctionId === auctionId).length;
   };
 
+  /**
+   * Handle new bid submission
+   * Validates the bid and updates local storage
+   */
   const handleBidSubmit = (bidderName: string, bidAmount: number) => {
     if (!selectedAuction) return;
 
@@ -91,6 +105,9 @@ export default function Home() {
     });
   };
 
+  /**
+   * Create a new auction with a name and reserve price
+   */
   const handleCreateAuction = (name: string, price: number) => {
     if (!name.trim() || typeof price !== 'number' || price <= 0) {
       toast({
@@ -120,6 +137,10 @@ export default function Home() {
     });
   };
 
+  /**
+   * Close an auction and determine the winner
+   * The price to pay is the second highest bid or the reserve price
+   */
   const handleCloseAuction = (auctionId: number) => {
     const bids = JSON.parse(localStorage.getItem('bids') || '[]') as { auctionId: number; bidderName: string; bidAmount: number }[];
     const auctionBids = bids.filter((bid) => bid.auctionId === auctionId).sort((a, b) => b.bidAmount - a.bidAmount);
@@ -149,6 +170,9 @@ export default function Home() {
     });
   };
 
+  /**
+   * Get all bids for a specific auction
+   */
   const getAuctionBids = (auctionId: number) => {
     const bids = JSON.parse(localStorage.getItem('bids') || '[]') as { auctionId: number; bidderName: string; bidAmount: number }[];
     return bids.filter((bid) => bid.auctionId === auctionId);
