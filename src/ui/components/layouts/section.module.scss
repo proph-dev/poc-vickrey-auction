@@ -1,0 +1,29 @@
+.white {
+    @apply
+    bg-light-white
+    rounded-xl
+    shadow-black/5
+    shadow-lg
+    p-5;
+
+    p {
+        @apply text-black-gray mb-5;
+    }
+}
+
+
+.orange {
+    @apply
+    rounded-xl
+    shadow-black/5
+    shadow-lg
+    p-5
+    bg-gradient-to-br
+    from-primary
+    to-secondary
+    text-white;
+
+    p {
+        @apply text-white mb-5;
+    }
+}

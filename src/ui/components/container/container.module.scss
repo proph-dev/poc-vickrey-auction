@@ -1,0 +1,10 @@
+.container {
+    @apply
+    relative
+    top-[96px]
+    w-full
+    min-h-[calc(100vh-96px)]
+    bg-gray-100
+    px-10
+    py-4;
+}

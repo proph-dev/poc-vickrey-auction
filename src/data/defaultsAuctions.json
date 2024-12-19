@@ -1,0 +1,20 @@
+[
+  {
+      "id": 1,
+      "name": "Enchère par défaut 1",
+      "startingPrice": 100,
+      "active": true
+  },
+  {
+      "id": 2,
+      "name": "Enchère par défaut 2",
+      "startingPrice": 200,
+      "active": true
+  },
+  {
+      "id": 3,
+      "name": "Enchère par défaut 3",
+      "startingPrice": 150,
+      "active": true
+  }
+]

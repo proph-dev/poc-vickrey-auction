@@ -1,0 +1,17 @@
+.footerContent {
+    @apply
+    fixed
+    bottom-5
+    w-full
+    text-black
+    flex
+    justify-center;
+
+    p {
+        @apply text-black mx-1;
+    }
+            
+    a {
+        @apply hover:underline;
+    }
+}

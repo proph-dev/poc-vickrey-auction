@@ -1,0 +1,25 @@
+.navbar {
+    @apply
+    fixed
+    top-0
+    right-0
+    w-full
+    h-24
+    flex
+    justify-between
+    items-center
+    bg-white
+    px-10
+    z-50
+    shadow;
+
+    .title {
+        @apply
+        text-4xl
+        tracking-wider
+        font-semibold
+        text-center
+        w-full
+        mr-5;
+    }
+}

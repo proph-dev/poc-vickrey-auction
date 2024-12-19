@@ -1,0 +1,33 @@
+.fullLoader {
+  @apply
+  fixed
+  inset-0
+  flex
+  items-center
+  justify-center
+  bg-white z-50;
+}
+
+.loader {
+  @apply relative;
+
+  .mainCircle {
+      @apply
+      absolute
+      top-0
+      left-0
+      rounded-full
+      border-t-8 
+      border-b-8
+      border-primary
+      animate-spin;
+  }
+
+  .secondCircle {
+      @apply
+      rounded-full
+      border-t-8
+      border-b-8
+      border-primary/30;
+  }
+}
