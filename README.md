@@ -34,7 +34,7 @@ To run the project using Docker, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/proph-dev/poc-vickrey-auction
    cd kata-frontend
    ```
 
