@@ -30,6 +30,7 @@ In a Vickrey auction, the winner is the bidder with the highest bid that meets o
 - **State Management**: LocalStorage is used for simplicity in persisting auctions and bids.
 
 ## Installation and Setup
+To run the project using Docker, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
@@ -37,18 +38,18 @@ In a Vickrey auction, the winner is the bidder with the highest bid that meets o
    cd kata-frontend
    ```
 
-2. **Install Dependencies**:
+2. **Build and Start the Application with Docker Compose**:
    ```bash
-   npm install
+   docker-compose up --build
    ```
 
-3. **Run the Development Server**:
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in Browser**:
+3. **Open in Browser**:
    Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+4. **Stop the Application**:
+   ```bash
+   docker-compose down
+   ```
 
 ## Usage
 
