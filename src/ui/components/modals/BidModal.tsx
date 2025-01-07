@@ -43,7 +43,7 @@ export const BidModal: React.FC<BidModalProps> = ({ auctionName, startingPrice, 
       <Input
         type="text"
         className="border border-gray-300 rounded p-2 w-full mb-4"
-        placeholder={`Proposition à partir de ${startingPrice}€`}
+        placeholder={`Le prix de réserve est de ${startingPrice}€`}
         value={bidAmount}
         onChange={(e) => setBidAmount(e.target.value)}
       />
