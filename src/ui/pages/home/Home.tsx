@@ -237,22 +237,16 @@ export default function Home() {
                 <TableCell>{getBidCount(auction.id)}</TableCell>
                 <TableCell>
                   {auction.active ? (
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                    <Dialog>
                       <DialogTrigger asChild>
-                        <Button onClick={() => setSelectedAuction(auction)}>
+                        <Button onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedAuction(auction);
+                          setIsDialogOpen(true);
+                        }}>
                           Faire une offre
                         </Button>
                       </DialogTrigger>
-                      <DialogContent>
-                        {selectedAuction && (
-                          <BidModal
-                            auctionName={selectedAuction.name}
-                            startingPrice={selectedAuction.startingPrice}
-                            onSubmit={handleBidSubmit}
-                            onClose={() => setIsDialogOpen(false)}
-                          />
-                        )}
-                      </DialogContent>
                     </Dialog>
                   ) : (
                     <span className="text-red-500 font-bold">Enchère clôturée</span>
@@ -284,6 +278,19 @@ export default function Home() {
             <BidsListModal
               auctionName={selectedAuction.name}
               bids={getAuctionBids(selectedAuction.id)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          {selectedAuction && (
+            <BidModal
+              auctionName={selectedAuction.name}
+              startingPrice={selectedAuction.startingPrice}
+              onSubmit={handleBidSubmit}
+              onClose={() => setIsDialogOpen(false)}
             />
           )}
         </DialogContent>
