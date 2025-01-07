@@ -17,17 +17,13 @@ export const BidModal: React.FC<BidModalProps> = ({ auctionName, startingPrice, 
 
   const handleSubmit = () => {
     const bidAmountNumber = parseFloat(bidAmount);
-    if (
-      bidderName.trim() &&
-      !isNaN(bidAmountNumber) &&
-      bidAmountNumber >= startingPrice
-    ) {
+    if (bidderName.trim() && !isNaN(bidAmountNumber)) {
       onSubmit(bidderName, bidAmountNumber);
       setBidderName('');
       setBidAmount('');
       onClose();
     } else {
-      alert('Veuillez remplir tous les champs correctement. Le montant doit être un nombre supérieur ou égal à ' + startingPrice + '€.');
+      alert('Veuillez remplir tous les champs correctement.');
     }
   };
 

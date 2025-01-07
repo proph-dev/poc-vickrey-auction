@@ -53,13 +53,12 @@ export default function Home() {
   const handleBidSubmit = (bidderName: string, bidAmount: number) => {
     if (!selectedAuction) return;
 
-    const isValidBidAmount = typeof bidAmount === 'number' && bidAmount >= selectedAuction.startingPrice;
     const isValidBidderName = bidderName.trim().length > 0;
 
-    if (!isValidBidAmount || !isValidBidderName) {
+    if (!isValidBidderName) {
       toast({
         title: 'Erreur lors du dépôt de l\'offre',
-        description: 'Veuillez remplir tous les champs correctement. Le montant doit être valide et supérieur ou égal au prix de réserve.',
+        description: 'Veuillez entrer un nom valide.',
         variant: 'destructive',
       });
       return;
@@ -99,10 +98,18 @@ export default function Home() {
     setSelectedAuction(null);
     setIsDialogOpen(false);
 
-    toast({
-      title: 'Offre déposée avec succès !',
-      description: `Votre offre de ${bidAmount}€ pour ${selectedAuction.name} a bien été enregistrée.`,
-    });
+    if (bidAmount < selectedAuction.startingPrice) {
+      toast({
+        title: 'Offre enregistrée',
+        description: `Attention : votre offre de ${bidAmount}€ est inférieure au prix de réserve (${selectedAuction.startingPrice}€). Elle ne sera pas prise en compte pour déterminer le gagnant.`,
+        variant: 'warning',
+      });
+    } else {
+      toast({
+        title: 'Offre déposée avec succès !',
+        description: `Votre offre de ${bidAmount}€ pour ${selectedAuction.name} a bien été enregistrée.`,
+      });
+    }
   };
 
   /**
@@ -143,27 +150,32 @@ export default function Home() {
    */
   const handleCloseAuction = (auctionId: number) => {
     const bids = JSON.parse(localStorage.getItem('bids') || '[]') as { auctionId: number; bidderName: string; bidAmount: number }[];
-    const auctionBids = bids.filter((bid) => bid.auctionId === auctionId).sort((a, b) => b.bidAmount - a.bidAmount);
-  
-    if (auctionBids.length === 0) {
+    const auction = auctions.find((a) => a.id === auctionId);
+    if (!auction) return;
+
+    const validBids = bids
+      .filter((bid) => bid.auctionId === auctionId && bid.bidAmount >= auction.startingPrice)
+      .sort((a, b) => b.bidAmount - a.bidAmount);
+
+    if (validBids.length === 0) {
       toast({
         title: 'Impossible de clôturer',
-        description: 'Il faut au moins une offre pour clôturer cette enchère.',
+        description: 'Il faut au moins une offre valide (supérieure ou égale au prix de réserve) pour clôturer cette enchère.',
         variant: 'destructive',
       });
       return;
     }
-  
-    const winner = auctionBids[0];
-    const priceToPay = auctionBids.length > 1 ? auctionBids[1].bidAmount : auctions.find((a) => a.id === auctionId)?.startingPrice;
-  
+
+    const winner = validBids[0];
+    const priceToPay = validBids.length > 1 ? validBids[1].bidAmount : auction.startingPrice;
+
     const updatedAuctions = auctions.map((auction) =>
       auction.id === auctionId ? { ...auction, active: false } : auction
     );
-  
+
     setAuctions(updatedAuctions);
     localStorage.setItem('auctions', JSON.stringify(updatedAuctions));
-  
+
     toast({
       title: `${winner.bidderName} a remporté l'enchère !`,
       description: `Il devra payer ${priceToPay}€.`,
@@ -278,6 +290,7 @@ export default function Home() {
             <BidsListModal
               auctionName={selectedAuction.name}
               bids={getAuctionBids(selectedAuction.id)}
+              startingPrice={selectedAuction.startingPrice}
             />
           )}
         </DialogContent>

@@ -9,9 +9,10 @@ interface Bid {
 interface BidsListModalProps {
   auctionName: string;
   bids: Bid[];
+  startingPrice: number;
 }
 
-export function BidsListModal({ auctionName, bids }: BidsListModalProps) {
+export function BidsListModal({ auctionName, bids, startingPrice }: BidsListModalProps) {
   const sortedBids = [...bids].sort((a, b) => b.bidAmount - a.bidAmount);
 
   return (
@@ -27,7 +28,14 @@ export function BidsListModal({ auctionName, bids }: BidsListModalProps) {
             {sortedBids.map((bid, index) => (
               <li key={index} className="flex justify-between items-center p-2 border rounded">
                 <span>{bid.bidderName}</span>
-                <span className="font-bold">{bid.bidAmount}€</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold">{bid.bidAmount}€</span>
+                  {bid.bidAmount < startingPrice && (
+                    <span className="text-sm text-red-500 italic">
+                      (offre inférieure au prix de réserve)
+                    </span>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
