@@ -167,7 +167,9 @@ export default function Home() {
     }
 
     const winner = validBids[0];
-    const priceToPay = validBids.length > 1 ? validBids[1].bidAmount : auction.startingPrice;
+    
+    const secondBestBid = validBids.find(bid => bid.bidderName !== winner.bidderName);
+    const priceToPay = secondBestBid ? secondBestBid.bidAmount : auction.startingPrice;
 
     const updatedAuctions = auctions.map((auction) =>
       auction.id === auctionId ? { ...auction, active: false } : auction
