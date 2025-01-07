@@ -178,6 +178,20 @@ export default function Home() {
     return bids.filter((bid) => bid.auctionId === auctionId);
   };
 
+  /**
+   * Reset auctions and bids to default state
+   */
+  const handleReset = () => {
+    localStorage.clear();
+    localStorage.setItem('auctions', JSON.stringify(defaultAuctions));
+    setAuctions(defaultAuctions as Auction[]);
+    
+    toast({
+      title: 'Réinitialisation effectuée',
+      description: 'Toutes les enchères ont été réinitialisées à leur état par défaut.',
+    });
+  };
+
   return (
     <main className="container mx-auto p-4">
       <Section className={style.heroSection}>
@@ -185,7 +199,14 @@ export default function Home() {
           <FirstTitle className="text-2xl font-bold mb-4">Les enchères existantes</FirstTitle>
           <p>Vous retrouverez ci-dessous la liste des enchères existantes. Cliquez sur une offre pour voir les offres en cours sur cette dernière.</p>
         </Stack>
-        <Button onClick={() => setIsCreateAuctionDialogOpen(true)} className={style.createAuctionBtn}>Créer une enchère</Button>
+        <div className="flex gap-4">
+          <Button onClick={() => setIsCreateAuctionDialogOpen(true)} className={style.createAuctionBtn}>
+            Créer une enchère
+          </Button>
+          <Button variant="outline" onClick={handleReset}>
+            Réinitialiser les enchères
+          </Button>
+        </div>
       </Section>
 
       <Section className={style.auctionsList}>
