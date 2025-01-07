@@ -1,4 +1,4 @@
-import { DialogHeader, DialogTitle } from '@/shadcn/components/dialog';
+import { DialogDescription, DialogHeader, DialogTitle } from '@/shadcn/components/dialog';
 import { Stack } from '../layouts/stack/Stack';
 
 interface Bid {
@@ -16,8 +16,9 @@ export function BidsListModal({ auctionName, bids }: BidsListModalProps) {
 
   return (
     <Stack className="p-4">
-      <DialogHeader>
-        <DialogTitle>Offres pour {auctionName}</DialogTitle>
+      <DialogHeader className='mb-4'>
+        <DialogTitle className='mb-2'>Offres pour {auctionName}</DialogTitle>
+        <DialogDescription>Liste des offres classées par ordre décroissant</DialogDescription>
       </DialogHeader>
       
       <Stack className="mt-4">

@@ -3,6 +3,7 @@ import { SecondTitle } from '../typos/SecondTitle';
 import { Stack } from '../layouts/stack/Stack';
 import { Button } from '@/shadcn/components/button';
 import { Input } from '@/shadcn/components/input';
+import { DialogDescription, DialogHeader, DialogTitle } from '@/shadcn/components/dialog';
 
 interface CreateAuctionModalProps {
   onSubmit: (name: string, startingPrice: number) => void;
@@ -26,7 +27,10 @@ export const CreateAuctionModal: React.FC<CreateAuctionModalProps> = ({ onSubmit
 
   return (
     <Stack>
-      <SecondTitle className="text-xl font-semibold mb-4">Créer une nouvelle enchère</SecondTitle>
+      <DialogHeader className='mb-4'>
+        <DialogTitle className='mb-2'>Créer une nouvelle enchère</DialogTitle>
+        <DialogDescription>Créez une nouvelle enchère pour commencer à vendre vos objets</DialogDescription>
+      </DialogHeader>
       <Input
         type="text"
         className="border border-gray-300 rounded p-2 w-full mb-4"

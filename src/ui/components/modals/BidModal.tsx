@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/shadcn/components/button';
 import { Stack } from '../layouts/stack/Stack';
-import { SecondTitle } from '../typos/SecondTitle';
 import { Input } from '@/shadcn/components/input';
+import { DialogTitle, DialogDescription, DialogHeader } from '@/shadcn/components/dialog';
 
 interface BidModalProps {
   auctionName: string;
@@ -33,7 +33,10 @@ export const BidModal: React.FC<BidModalProps> = ({ auctionName, startingPrice, 
 
   return (
     <Stack>
-      <SecondTitle className="text-xl font-semibold mb-4">Faire une offre pour {auctionName}</SecondTitle>
+      <DialogHeader className='mb-4'>
+        <DialogTitle className='mb-2'>Faire une offre pour {auctionName}</DialogTitle>
+        <DialogDescription>Réalisez votre offre pour l'enchère {auctionName}</DialogDescription>
+      </DialogHeader>
       <Input
         type="text"
         className="border border-gray-300 rounded p-2 w-full mb-4"
