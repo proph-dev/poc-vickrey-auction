@@ -167,12 +167,18 @@ export default function Home() {
     }
 
     const winner = validBids[0];
-    
     const secondBestBid = validBids.find(bid => bid.bidderName !== winner.bidderName);
     const priceToPay = secondBestBid ? secondBestBid.bidAmount : auction.startingPrice;
 
     const updatedAuctions = auctions.map((auction) =>
-      auction.id === auctionId ? { ...auction, active: false } : auction
+      auction.id === auctionId ? {
+        ...auction,
+        active: false,
+        winner: {
+          bidderName: winner.bidderName,
+          pricePaid: priceToPay
+        }
+      } : auction
     );
 
     setAuctions(updatedAuctions);
@@ -263,7 +269,14 @@ export default function Home() {
                       </DialogTrigger>
                     </Dialog>
                   ) : (
-                    <span className="text-red-500 font-bold">Enchère clôturée</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-500 font-bold">Enchère clôturée</span>
+                      {auction.winner && (
+                        <span className="text-sm text-gray-600">
+                          (Gagnant: {auction.winner.bidderName} - Prix payé: {auction.winner.pricePaid}€)
+                        </span>
+                      )}
+                    </div>
                   )}
                   {auction.active && (
                     <Button variant="outline" onClick={() => handleCloseAuction(auction.id)} className='ml-4'>
@@ -293,6 +306,8 @@ export default function Home() {
               auctionName={selectedAuction.name}
               bids={getAuctionBids(selectedAuction.id)}
               startingPrice={selectedAuction.startingPrice}
+              isActive={selectedAuction.active}
+              winner={selectedAuction.winner}
             />
           )}
         </DialogContent>
